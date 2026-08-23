@@ -18,6 +18,10 @@ add_executable(XenosRecomp
     shader_recompiler.h
     "${SMOLV_SOURCE_DIR}/smolv.cpp")
 
+if (UNLEASHED_RECOMP_HOST_TOOLS_ONLY)
+    target_compile_definitions(XenosRecomp PRIVATE UNLEASHED_RECOMP)
+endif()
+
 target_link_libraries(XenosRecomp PRIVATE
     Microsoft::DirectXShaderCompiler
     xxHash::xxhash

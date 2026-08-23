@@ -1,6 +1,7 @@
 #include <api/SWA.h>
 #include <os/logger.h>
 #include <ui/game_window.h>
+#include <ui/touch_controls.h>
 
 #include <atomic>
 #include <user/achievement_manager.h>

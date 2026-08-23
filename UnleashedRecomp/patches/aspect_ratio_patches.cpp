@@ -4,6 +4,7 @@
 #include <ui/game_window.h>
 #include <ui/black_bar.h>
 #include <gpu/video.h>
+#include <os/logger.h>
 #include <xxHashMap.h>
 
 #include "aspect_ratio_patches.h"
@@ -79,16 +80,42 @@ namespace Chao::CSD
 
 static Mutex g_pathMutex;
 static std::map<const void*, XXH64_hash_t> g_paths;
+static std::map<XXH64_hash_t, std::string> g_pathNames;
 
 static XXH64_hash_t HashStr(const std::string_view& value)
 {
     return XXH3_64bits(value.data(), value.size());
 }
 
+static bool IsQteScenePath(XXH64_hash_t path)
+{
+    return path == HashStr("ui_qte/qte/qte_single/s_bg") ||
+        path == HashStr("ui_qte/qte/qte_single/s_timer") ||
+    path == HashStr("ui_qte/qte/qte_multi/m_bg") ||
+    path == HashStr("ui_qte/qte/qte_multi/m_timer") ||
+    path == HashStr("ui_qte/qte/qte_effect/qte_single_effect") ||
+    path == HashStr("ui_qte/qte/qte_effect/qte_multi_effect");
+}
+
+static bool IsQteGuideScenePath(XXH64_hash_t path)
+{
+    std::lock_guard lock(g_pathMutex);
+    const auto it = g_pathNames.find(path);
+    return it != g_pathNames.end() && it->second.starts_with("ui_qte/qte/guide/");
+}
+
+static bool IsScenePathOrChild(const std::string& path, std::string_view parent)
+{
+    return path == parent ||
+        (path.size() > parent.size() && path.starts_with(parent) && path[parent.size()] == '/');
+}
+
 static void EmplacePath(const void* key, const std::string_view& value)
 {
     std::lock_guard lock(g_pathMutex);
-    g_paths.emplace(key, HashStr(value));
+    const auto hash = HashStr(value);
+    g_paths.emplace(key, hash);
+    g_pathNames.emplace(hash, value);
 }
 
 static void TraverseCast(Chao::CSD::Scene* scene, uint32_t castNodeIndex, Chao::CSD::CastNode* castNode, uint32_t castIndex, const std::string& parentPath)
@@ -872,6 +899,36 @@ PPC_FUNC(sub_830C6A00)
     XXH64_hash_t scenePath = 0;
     g_sceneModifier = FindModifier(ctx.r3.u32, &scenePath);
 
+    std::string scenePathName;
+    {
+        std::lock_guard lock(g_pathMutex);
+        if (const auto it = g_pathNames.find(scenePath); it != g_pathNames.end())
+            scenePathName = it->second;
+    }
+
+    if (g_sceneModifier.has_value() && (g_sceneModifier->flags & TORNADO_DEFENSE) != 0)
+        TouchControls::NotifyTornadoDefenseActive(true);
+
+    if (IsScenePathOrChild(scenePathName, "ui_playscreen_su/su_sonic_gauge") ||
+        IsScenePathOrChild(scenePathName, "ui_playscreen_su/gaia_gauge") ||
+        IsScenePathOrChild(scenePathName, "ui_playscreen_su/footer"))
+        TouchControls::NotifyFinalHudGaugeVisible(scenePathName.c_str());
+
+    if (scenePathName.starts_with("ui_playscreen/") ||
+        scenePathName.starts_with("ui_playscreen_ev/") ||
+        scenePathName.starts_with("ui_playscreen_su/") ||
+        scenePathName.starts_with("ui_prov_playscreen/"))
+        TouchControls::NotifyGameplayHudVisible();
+
+    if (IsQteGuideScenePath(scenePath))
+        TouchControls::NotifyQteGuideVisible();
+
+    if (IsQteScenePath(scenePath))
+        TouchControls::NotifyQteActive(true);
+
+    if (scenePathName.starts_with("ui_boss_gauge/"))
+        TouchControls::NotifyBossGaugeVisible(scenePathName.c_str());
+
     for (auto& menuPath : g_menuScenePaths)
     {
         if (menuPath == scenePath)
@@ -1599,7 +1656,7 @@ void YggdrasillRenderQuadMidAsmHook(PPCRegister& r3, PPCRegister& r6)
 // as the backbuffer resolution is 640x480 at 4:3. We need to account
 // for this manually to make the positioning match with the original game.
 static constexpr uint32_t EVIL_HUD_GUIDE_BYTE_SIZE = 0x154;
-
+static constexpr uint32_t EVIL_HUD_GUIDE_VISIBLE_OFFSET = 0x14E;
 void EvilHudGuideAllocMidAsmHook(PPCRegister& r3)
 {
     r3.u32 += sizeof(float);

@@ -6,6 +6,7 @@
 #include <ui/fader.h>
 #include <ui/message_window.h>
 #include <ui/options_menu.h>
+#include <ui/touch_controls.h>
 #include <user/achievement_manager.h>
 #include <user/paths.h>
 #include <app.h>
@@ -52,6 +53,7 @@ static bool ProcessInstallMessage()
 PPC_FUNC_IMPL(__imp__sub_825882B8);
 PPC_FUNC(sub_825882B8)
 {
+    TouchControls::NotifyTitleMenuVisible();
     auto pTitleStateMenu = (SWA::CTitleStateMenu*)g_memory.Translate(ctx.r3.u32);
     auto pGameDocument = SWA::CGameDocument::GetInstance();
 

@@ -130,7 +130,7 @@ PPC_FUNC(sub_824B0930)
     auto pInputState = SWA::CInputState::GetInstance();
 
     if (pHudPause->m_IsShown)
-        TouchControls::NotifyMenuVisible();
+        TouchControls::NotifyPauseMenuVisible();
 
     g_achievementMenuIntroTime += App::s_deltaTime;
 
