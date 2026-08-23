@@ -1,6 +1,7 @@
 # Unleashed Recompiled for Android
 
 <img width="640" height="360" alt="715 Sem Título_20260710122452" src="https://github.com/user-attachments/assets/00fa9b4a-4761-4cad-9ecb-060a5bec815d" />
+VERSION 0.6.0 CUSTOM WITH HELP OF MODEL GPT 5.6 LUNA
 
 Play the Xbox 360 version of *Sonic Unleashed* natively on a supported Android device.
 
