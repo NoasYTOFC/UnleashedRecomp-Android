@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.6.0 (2026-08-22)
+
+### Redesigned touch controls
+
+- Reworked the default on-screen controls for both Sonic and Werehog with clearer action layouts and individual Xbox-style button artwork.
+- Sonic controls now support the action swipe from **X -> RT** for the boost-to-drift transition.
+- During Sonic gameplay, swiping left or right on an empty area performs a quickstep.
+- Werehog controls now support **LB -> A** for dodge and **LB -> X** or **LB -> Y** for specific combos while guarding.
+- The left analog stick moves the character, while swiping on the free side of the screen controls the camera.
+- Legacy mode keeps the classic Xbox control layout and disables the new swipe gestures.
+
+### New external touch-layout editor
+
+- Added a standalone fullscreen Android editor that does not depend on the game renderer, Vulkan or a game-file installation.
+- Sonic and Werehog layouts can be configured separately.
+- Added three independent layout presets for each character, with separate **Default** and **Legacy** control styles.
+- The editor shows translucent, touch-sized controls over a fullscreen preview and supports reset and save actions.
+- Added a permanent controls tutorial button to the launcher, with instructions translated into all eight supported launcher languages.
+
 ## 0.5.2 (2026-07-13)
 
 Version 0.5.2 replaces the withdrawn 0.5.1 APK. It contains every user-facing change from 0.5.1, removes performance instrumentation that was unintentionally left enabled there, and adds the features below.

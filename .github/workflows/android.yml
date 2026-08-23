@@ -164,12 +164,15 @@ jobs:
           else
             ./gradlew --no-daemon assembleDebug
           fi
+          apk=$(find app/build/outputs/apk -name '*.apk' ! -name 'UnleashedRecomp-0.6.0.apk' | head -n 1)
+          test -n "$apk"
+          cp "$apk" app/build/outputs/apk/UnleashedRecomp-0.6.0.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: UnleashedRecomp-Android-${{ github.ref_name }}
-          path: android-apk/app/build/outputs/apk/**/*.apk
+          path: android-apk/app/build/outputs/apk/UnleashedRecomp-0.6.0.apk
           if-no-files-found: error
 
       - name: Attach APK to release
@@ -177,6 +180,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          find android-apk/app/build/outputs/apk -name '*.apk' -print0 |
-            xargs -0 gh release upload "$GITHUB_REF_NAME" --clobber || \
+          gh release upload "$GITHUB_REF_NAME" \
+            android-apk/app/build/outputs/apk/UnleashedRecomp-0.6.0.apk --clobber || \
             echo "No release for $GITHUB_REF_NAME yet; APK stays available as a workflow artifact."

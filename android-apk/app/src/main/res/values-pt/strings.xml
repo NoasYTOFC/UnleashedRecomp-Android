@@ -32,6 +32,9 @@
     <string name="launcher_touch_policy">Controles na tela</string>
     <string name="launcher_touch_camera">Controle da câmera</string>
     <string name="launcher_edit_layout">Organizar controles de toque</string>
+    <string name="launcher_controls_tutorial">Tutorial dos controles</string>
+    <string name="controls_tutorial_title">Novos controles de toque</string>
+    <string name="controls_tutorial_message">CONTROLES GERAIS\n- Mova-se com o analógico esquerdo.\n- Deslize na área livre da tela para controlar a câmera.\n\nSONIC\n- A: pula\n- X: boost\n- RT: drift\n- Deslize de X para RT para fazer a transição de ação do Sonic.\n- Deslize para a esquerda ou direita em uma área vazia para fazer quickstep.\n\nWEREHOG\n- A: pula\n- X e Y: atacam\n- LB: defende\n- RB: libera o poder\n- RT: dash\n- Deslize de LB para A para esquivar.\n- Deslize de LB para X ou Y para fazer combos específicos enquanto defende.\n\nLEGACY\nLayout Xbox clássico. Os gestos de deslize ficam desativados.</string>
     <string name="launcher_mods">Mods</string>
     <string name="launcher_mods_summary">Ative mods HMM/UMM compatíveis e defina a prioridade deles.</string>
     <string name="launcher_manage_mods">Gerenciar mods</string>
@@ -80,10 +83,16 @@
     <string name="error_install_no_mod">A origem selecionada não contém nenhum mod.ini, então nenhum mod foi encontrado.</string>
 
     <string-array name="driver_labels">
-        <item>Auto (recomendado)</item><item>Sistema</item><item>Turnip incluído</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance (experimental; sysmem+nobin)</item><item>Importado</item>
+        <item>Auto (recomendado)</item><item>Sistema</item><item>Turnip incluído</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance (experimental; sysmem+nobin)</item><item>Adreno 8xx Experimental (sysmem+flushall)</item><item>Importado</item>
     </string-array>
     <string-array name="render_mode_labels">
         <item>Auto (recomendado)</item><item>GMEM</item><item>Sysmem</item>
+    </string-array>
+    <string name="launcher_audio">Áudio</string>
+    <string name="launcher_audio_preset">Predefinição de áudio</string>
+    <string name="launcher_audio_preset_hint">Escolha AYN se o jogo ficar sem som desde o início (AYN Odin 2 / Thor e portáteis semelhantes). O perfil POCO F8 Ultra ativa um caminho AAudio experimental de baixa latência para esse dispositivo; em outros pode causar estalos ou perda de som. Aplicado na próxima inicialização.</string>
+    <string-array name="audio_preset_labels">
+        <item>Padrão (recomendado)</item><item>AYN (consoles portáteis)</item><item>POCO F8 Ultra (baixa latência)</item>
     </string-array>
     <string-array name="touch_policy_labels">
         <item>Auto</item><item>Sempre ativados</item><item>Desativados</item>

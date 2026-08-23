@@ -38,6 +38,9 @@
     <string name="launcher_touch_policy">On-screen controls</string>
     <string name="launcher_touch_camera">Camera control</string>
     <string name="launcher_edit_layout">Arrange touch controls</string>
+    <string name="launcher_controls_tutorial">Controls tutorial</string>
+    <string name="controls_tutorial_title">New touch controls</string>
+    <string name="controls_tutorial_message">GENERAL CONTROLS\n- Move with the left stick.\n- Swipe on the free side of the screen to control the camera.\n\nSONIC\n- A: jump\n- X: boost\n- RT: drift\n- Swipe from X to RT for the Sonic action transition.\n- Swipe left or right on an empty area to quickstep.\n\nWEREHOG\n- A: jump\n- X and Y: attack\n- LB: guard\n- RB: unleash power\n- RT: dash\n- Swipe from LB to A to dodge.\n- Swipe from LB to X or Y for specific combos while guarding.\n\nLEGACY\nClassic Xbox layout. Swipe gestures are disabled.</string>
     <string name="launcher_mods">Mods</string>
     <string name="launcher_mods_summary">Enable compatible HMM/UMM mods and set their priority.</string>
     <string name="launcher_manage_mods">Manage mods</string>
@@ -89,10 +92,16 @@
     <string name="error_install_no_mod">The selected source does not contain a mod.ini, so no mod could be found in it.</string>
 
     <string-array name="driver_labels">
-        <item>Auto (recommended)</item><item>System</item><item>Bundled Turnip</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance (experimental; sysmem+nobin)</item><item>Imported</item>
+        <item>Auto (recommended)</item><item>System</item><item>Bundled Turnip</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance (experimental; sysmem+nobin)</item><item>Adreno 8xx Experimental (sysmem+flushall)</item><item>Imported</item>
     </string-array>
     <string-array name="render_mode_labels">
         <item>Auto (recommended)</item><item>GMEM</item><item>Sysmem</item>
+    </string-array>
+    <string name="launcher_audio">Audio</string>
+    <string name="launcher_audio_preset">Audio preset</string>
+    <string name="launcher_audio_preset_hint">Choose AYN if the game has no sound from startup (AYN Odin 2 / Thor and similar handhelds). The POCO F8 Ultra profile uses an experimental low-latency AAudio path for that device; it may cause crackling or loss of sound elsewhere. Takes effect on the next launch.</string>
+    <string-array name="audio_preset_labels">
+        <item>Default (recommended)</item><item>AYN (handheld consoles)</item><item>POCO F8 Ultra (low latency)</item>
     </string-array>
     <string-array name="touch_policy_labels">
         <item>Auto</item><item>Always on</item><item>Off</item>

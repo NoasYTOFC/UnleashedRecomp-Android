@@ -33,8 +33,16 @@ public:
     // and the like) and decays like the menu flag. In a menu the left stick becomes
     // a D-pad; in a cutscene or movie everything collapses to a single SKIP button.
     static void NotifyMenuVisible();
+    static void NotifyTitleMenuVisible();
+    static void NotifyPauseMenuVisible();
+    static void NotifyBossGaugeVisible(const char* path);
+    static void NotifyFinalHudGaugeVisible(const char* path);
+    static void NotifyGameplayHudVisible();
     static void NotifyCutsceneActive(bool active);
     static void NotifyMovieVisible();
+    static void NotifyQteActive(bool active);
+    static void NotifyQteGuideVisible();
+    static void NotifyTornadoDefenseActive(bool active);
 
     static void Init();
     static void Draw();

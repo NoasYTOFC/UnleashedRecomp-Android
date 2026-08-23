@@ -120,6 +120,13 @@
             android:theme="@style/ModManagerTheme" />
 
         <activity
+            android:name=".TouchControlsEditorActivity"
+            android:label="@string/launcher_edit_layout"
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/LauncherTheme" />
+
+        <activity
             android:name=".ModSettingsActivity"
             android:label="@string/mod_settings_title"
             android:exported="false"

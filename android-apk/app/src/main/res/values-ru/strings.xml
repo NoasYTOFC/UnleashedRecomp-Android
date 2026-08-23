@@ -39,6 +39,9 @@
     <string name="launcher_touch_policy">Экранные кнопки</string>
     <string name="launcher_touch_camera">Управление камерой</string>
     <string name="launcher_edit_layout">Настроить расположение кнопок</string>
+    <string name="launcher_controls_tutorial">Обучение управлению</string>
+    <string name="controls_tutorial_title">Новое сенсорное управление</string>
+    <string name="controls_tutorial_message">ОБЩЕЕ УПРАВЛЕНИЕ\n- Перемещайтесь левым стиком.\n- Управляйте камерой свайпом по свободной части экрана.\n\nСОНИК\n- A: прыжок\n- X: ускорение\n- RT: дрифт\n- Свайп от X к RT переключает действие Соника.\n- Свайп влево или вправо по свободной области выполняет quickstep.\n\nВЭРХОГ\n- A: прыжок\n- X и Y: атака\n- LB: защита\n- RB: высвобождение силы\n- RT: рывок\n- Свайп от LB к A выполняет уклонение.\n- Свайп от LB к X или Y выполняет специальные комбо во время защиты.\n\nLEGACY\nКлассическая раскладка Xbox. Жесты смахивания отключены.</string>
     <string name="launcher_mods">Моды</string>
     <string name="launcher_mods_summary">Включайте совместимые моды HMM/UMM и задавайте их приоритет.</string>
     <string name="launcher_manage_mods">Управление модами</string>
@@ -90,10 +93,16 @@
     <string name="error_install_no_mod">В выбранном источнике нет mod.ini — мод не найден.</string>
 
     <string-array name="driver_labels">
-        <item>Авто (рекомендуется)</item><item>Системный</item><item>Встроенный Turnip</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance (эксперимент; sysmem+nobin)</item><item>Импортированный</item>
+        <item>Авто (рекомендуется)</item><item>Системный</item><item>Встроенный Turnip</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance (эксперимент; sysmem+nobin)</item><item>Adreno 8xx Experimental (sysmem+flushall)</item><item>Импортированный</item>
     </string-array>
     <string-array name="render_mode_labels">
         <item>Авто (рекомендуется)</item><item>GMEM</item><item>Sysmem</item>
+    </string-array>
+    <string name="launcher_audio">Звук</string>
+    <string name="launcher_audio_preset">Пресет звука</string>
+    <string name="launcher_audio_preset_hint">Выберите AYN, если звука нет с самого запуска игры (AYN Odin 2 / Thor и похожие консоли). Профиль POCO F8 Ultra включает экспериментальный низколатентный путь AAudio для этого устройства; на других устройствах возможны треск или пропадание звука. Применяется при следующем запуске.</string>
+    <string-array name="audio_preset_labels">
+        <item>Стандартный (рекомендуется)</item><item>AYN (портативные консоли)</item><item>POCO F8 Ultra (низкая задержка)</item>
     </string-array>
     <string-array name="touch_policy_labels">
         <item>Авто</item><item>Всегда включены</item><item>Выключены</item>

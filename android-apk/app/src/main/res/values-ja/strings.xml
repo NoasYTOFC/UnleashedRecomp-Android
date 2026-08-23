@@ -32,6 +32,9 @@
     <string name="launcher_touch_policy">画面上のコントロール</string>
     <string name="launcher_touch_camera">カメラ操作</string>
     <string name="launcher_edit_layout">タッチコントロールの配置</string>
+    <string name="launcher_controls_tutorial">操作チュートリアル</string>
+    <string name="controls_tutorial_title">新しいタッチ操作</string>
+    <string name="controls_tutorial_message">基本操作\n- 左スティックで移動します。\n- 画面の空いている側をスワイプしてカメラを操作します。\n\nソニック\n- A：ジャンプ\n- X：ブースト\n- RT：ドリフト\n- XからRTへスワイプするとアクションを切り替えられます。\n- 空いている場所を左右にスワイプするとクイックステップできます。\n\nウェアホッグ\n- A：ジャンプ\n- XとY：攻撃\n- LB：ガード\n- RB：パワー解放\n- RT：ダッシュ\n- LBからAへスワイプすると回避します。\n- ガード中にLBからXまたはYへスワイプすると特定コンボを行います。\n\nLEGACY\n従来のXbox配置。スワイプ操作は無効です。</string>
     <string name="launcher_mods">MOD</string>
     <string name="launcher_mods_summary">互換性のある HMM/UMM MOD を有効化し、優先順位を設定します。</string>
     <string name="launcher_manage_mods">MODの管理</string>
@@ -80,10 +83,16 @@
     <string name="error_install_no_mod">選択したソースに mod.ini が含まれていないため、MODが見つかりませんでした。</string>
 
     <string-array name="driver_labels">
-        <item>自動（推奨）</item><item>システム</item><item>同梱 Turnip</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance（実験的・sysmem+nobin）</item><item>インポート済み</item>
+        <item>自動（推奨）</item><item>システム</item><item>同梱 Turnip</item><item>Adreno 710 (Vauzi)</item><item>A725 Performance（実験的・sysmem+nobin）</item><item>Adreno 8xx Experimental (sysmem+flushall)</item><item>インポート済み</item>
     </string-array>
     <string-array name="render_mode_labels">
         <item>自動（推奨）</item><item>GMEM</item><item>Sysmem</item>
+    </string-array>
+    <string name="launcher_audio">オーディオ</string>
+    <string name="launcher_audio_preset">オーディオプリセット</string>
+    <string name="launcher_audio_preset_hint">起動時から音が出ない場合は AYN を選択してください（AYN Odin 2 / Thor など）。POCO F8 Ultra プロファイルは、この端末向けに試験的な低遅延 AAudio 経路を有効にします。他の端末では音割れや無音が発生する可能性があります。次回起動時に適用されます。</string>
+    <string-array name="audio_preset_labels">
+        <item>デフォルト（推奨）</item><item>AYN（携帯ゲーム機）</item><item>POCO F8 Ultra（低遅延）</item>
     </string-array>
     <string-array name="touch_policy_labels">
         <item>自動</item><item>常に表示</item><item>オフ</item>
