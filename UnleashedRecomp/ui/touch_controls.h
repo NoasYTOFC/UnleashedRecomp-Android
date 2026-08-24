@@ -35,6 +35,7 @@ public:
     static void NotifyMenuVisible();
     static void NotifyTitleMenuVisible();
     static void NotifyPauseMenuVisible();
+    static void NotifyPauseMenuHidden();
     static void NotifyBossGaugeVisible(const char* path);
     static void NotifyFinalHudGaugeVisible(const char* path);
     static void NotifyGameplayHudVisible();
@@ -42,6 +43,7 @@ public:
     static void NotifyMovieVisible();
     static void NotifyQteActive(bool active);
     static void NotifyQteGuideVisible();
+    static void NotifyQteCompleted();
     static void NotifyTornadoDefenseActive(bool active);
 
     static void Init();

@@ -131,6 +131,8 @@ PPC_FUNC(sub_824B0930)
 
     if (pHudPause->m_IsShown)
         TouchControls::NotifyPauseMenuVisible();
+    else
+        TouchControls::NotifyPauseMenuHidden();
 
     g_achievementMenuIntroTime += App::s_deltaTime;
 

@@ -104,6 +104,23 @@ static bool IsQteGuideScenePath(XXH64_hash_t path)
     return it != g_pathNames.end() && it->second.starts_with("ui_qte/qte/guide/");
 }
 
+static bool IsQteCompletionTextPath(const std::string& path)
+{
+    constexpr std::string_view PREFIX = "ui_qte/qte/qte_txt/qte_txt_";
+
+    if (!path.starts_with(PREFIX) || path.size() == PREFIX.size())
+        return false;
+
+    return std::all_of(path.begin() + PREFIX.size(), path.end(), [](char character)
+        {
+            return character >= '0' && character <= '9';
+        });
+}
+
+static uint64_t g_qteCompletionTextSeenAtMs = 0;
+static uint32_t g_qteCompletionTextCount = 0;
+static bool g_qteCompletionDetected = false;
+
 static bool IsScenePathOrChild(const std::string& path, std::string_view parent)
 {
     return path == parent ||
@@ -921,10 +938,34 @@ PPC_FUNC(sub_830C6A00)
         TouchControls::NotifyGameplayHudVisible();
 
     if (IsQteGuideScenePath(scenePath))
+    {
         TouchControls::NotifyQteGuideVisible();
+    }
+
+    if (IsQteCompletionTextPath(scenePathName))
+    {
+        constexpr uint64_t QTE_COMPLETION_TEXT_WINDOW_MS = 500;
+        constexpr uint32_t QTE_COMPLETION_TEXT_THRESHOLD = 3;
+        const uint64_t now = SDL_GetTicks64();
+
+        if (now - g_qteCompletionTextSeenAtMs > QTE_COMPLETION_TEXT_WINDOW_MS)
+            g_qteCompletionTextCount = 0;
+
+        g_qteCompletionTextSeenAtMs = now;
+        ++g_qteCompletionTextCount;
+
+        if (!g_qteCompletionDetected && g_qteCompletionTextCount >= QTE_COMPLETION_TEXT_THRESHOLD)
+        {
+            g_qteCompletionDetected = true;
+            TouchControls::NotifyQteCompleted();
+        }
+    }
 
     if (IsQteScenePath(scenePath))
+    {
+        g_qteCompletionDetected = false;
         TouchControls::NotifyQteActive(true);
+    }
 
     if (scenePathName.starts_with("ui_boss_gauge/"))
         TouchControls::NotifyBossGaugeVisible(scenePathName.c_str());

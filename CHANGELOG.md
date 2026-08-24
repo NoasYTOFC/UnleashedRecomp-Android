@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.1 (2026-08-23)
+
+- Fixed D-pad rendering.
+- Fixed QTE controls taking too long to disappear.
+- Fixed touch controls not appearing in the Hub World.
+- Fixed controls taking too long to reappear after unpausing.
+
 ## 0.6.0 (2026-08-22)
 
 ### Redesigned touch controls

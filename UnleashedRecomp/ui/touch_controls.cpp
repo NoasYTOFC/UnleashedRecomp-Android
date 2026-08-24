@@ -202,7 +202,7 @@ namespace
     std::atomic<uint64_t> g_qteSeenAtMs{ 0 };
     std::atomic<uint64_t> g_qteGuideSeenAtMs{ 0 };
     std::atomic<uint64_t> g_tornadoDefenseSeenAtMs{ 0 };
-    constexpr uint64_t QTE_STAMP_FRESH_MS = 2000;
+    constexpr uint64_t QTE_STAMP_FRESH_MS = 1000;
     constexpr uint64_t QTE_GUIDE_SUPPRESSION_MS = 500;
 
     enum class ETouchContext { Normal, Menu, Title, Pause, Settings, Cutscene };
@@ -215,6 +215,16 @@ namespace
 
         const char* stageName = gameDocument->m_pMember->m_StageName.c_str();
         return stageName && strcmp(stageName, "BossFinalDarkGaia") == 0;
+    }
+
+    bool IsStageLoaded()
+    {
+        auto* gameDocument = SWA::CGameDocument::GetInstance();
+        if (!gameDocument || !gameDocument->m_pMember)
+            return false;
+
+        const char* stageName = gameDocument->m_pMember->m_StageName.c_str();
+        return stageName && stageName[0] != '\0';
     }
 
     void LogFinalBossStageState(bool active, bool bossGaugeVisible, const std::string& bossGaugePath,
@@ -700,6 +710,8 @@ namespace
         dl->AddCircleFilled(c, baseR, IM_COL32(0, 0, 0, bits ? 90 : 55), 48);
         dl->AddCircle(c, baseR, IM_COL32(255, 255, 255, 130), 48, 3.0f);
 
+        const float armHalf = baseR * 0.24f;
+        const float armLength = baseR * 0.76f;
         struct { float ox, oy; uint16_t bit; } dirs[4] =
         {
             {  0.0f, -1.0f, XAMINPUT_GAMEPAD_DPAD_UP },
@@ -709,13 +721,14 @@ namespace
         };
         for (const auto& d : dirs)
         {
-            const ImVec2 tip { c.x + d.ox * baseR * 0.78f, c.y + d.oy * baseR * 0.78f };
-            const ImVec2 b1  { c.x - d.ox * baseR * 0.38f + d.oy * baseR * 0.26f,
-                               c.y - d.oy * baseR * 0.38f - d.ox * baseR * 0.26f };
-            const ImVec2 b2  { c.x + d.ox * baseR * 0.38f + d.oy * baseR * 0.26f,
-                               c.y + d.oy * baseR * 0.38f + d.ox * baseR * 0.26f };
             const bool on = (st.wButtons & d.bit) != 0;
-            dl->AddTriangleFilled(tip, b1, b2, IM_COL32(255, 255, 255, on ? 230 : 120));
+            const ImVec2 min = d.ox != 0.0f
+                ? ImVec2(c.x + (d.ox < 0.0f ? -armLength : -armHalf), c.y - armHalf)
+                : ImVec2(c.x - armHalf, c.y + (d.oy < 0.0f ? -armLength : -armHalf));
+            const ImVec2 max = d.ox != 0.0f
+                ? ImVec2(c.x + (d.ox < 0.0f ? armHalf : armLength), c.y + armHalf)
+                : ImVec2(c.x + armHalf, c.y + (d.oy < 0.0f ? armHalf : armLength));
+            dl->AddRectFilled(min, max, IM_COL32(255, 255, 255, on ? 230 : 120));
         }
     }
 
@@ -864,6 +877,11 @@ void TouchControls::NotifyPauseMenuVisible()
     g_pauseMenuSeenAtMs.store(SDL_GetTicks64(), std::memory_order_relaxed);
 }
 
+void TouchControls::NotifyPauseMenuHidden()
+{
+    g_pauseMenuSeenAtMs.store(0, std::memory_order_relaxed);
+}
+
 void TouchControls::NotifyBossGaugeVisible(const char* path)
 {
     g_bossGaugeSeenAtMs.store(SDL_GetTicks64(), std::memory_order_relaxed);
@@ -927,6 +945,12 @@ void TouchControls::NotifyQteGuideVisible()
 {
     g_qteGuideSeenAtMs.store(SDL_GetTicks64(), std::memory_order_relaxed);
     g_qteSeenAtMs.store(0, std::memory_order_relaxed);
+}
+
+void TouchControls::NotifyQteCompleted()
+{
+    g_qteSeenAtMs.store(0, std::memory_order_relaxed);
+    g_qteGuideSeenAtMs.store(0, std::memory_order_relaxed);
 }
 
 void TouchControls::NotifyTornadoDefenseActive(bool active)
@@ -1021,6 +1045,7 @@ void TouchControls::Draw()
     // signal independent from the player-character signal: CEvilSonicContext
     // means Werehog here and does not identify Light Gaia or Super Sonic.
     const bool stageMatchesFinalBoss = IsFinalDarkGaiaStage();
+    const bool stageLoaded = IsStageLoaded();
     const uint64_t now = SDL_GetTicks64();
     const bool bossGaugeVisible = now -
         g_bossGaugeSeenAtMs.load(std::memory_order_relaxed) < MENU_STAMP_FRESH_MS;
@@ -1189,7 +1214,7 @@ void TouchControls::Draw()
             return;
         }
 
-        if (context == ETouchContext::Normal && !gameplayHudVisible && !qteLayoutActive)
+        if (context == ETouchContext::Normal && !gameplayHudVisible && !stageLoaded && !qteLayoutActive)
         {
             g_state = {};
             g_stickFingerId = (SDL_FingerID)-1;
