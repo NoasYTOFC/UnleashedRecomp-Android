@@ -2,6 +2,8 @@
 
 <img width="640" height="360" alt="715 Sem Título_20260710122452" src="https://github.com/user-attachments/assets/00fa9b4a-4761-4cad-9ecb-060a5bec815d" />
 
+VERSION 0.6.0 CUSTOM WITH HELP OF MODEL GPT 5.6 LUNA
+
 Play the Xbox 360 version of *Sonic Unleashed* natively on a supported Android device.
 
 This is an unofficial Android port of [Unleashed Recompiled](https://github.com/hedge-dev/UnleashedRecomp). It runs the game through static recompilation rather than emulating an Xbox 360, and includes an Android app, touch controls, gamepad support, a mod manager, and a custom Vulkan driver for many Qualcomm Adreno GPUs.
